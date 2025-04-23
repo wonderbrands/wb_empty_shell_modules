@@ -8,4 +8,12 @@
     'category': 'Tools',
     'author': 'VentorTech',
     'license': 'OPL-1',
+        'depends': [
+        'web',
+        'account',
+        'stock',
+        'delivery',
+        'sale',
+        'purchase',
+    ],
 }
