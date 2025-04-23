@@ -2,7 +2,6 @@
 # See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, api, exceptions, _
-from ..wizard.printnode_print_reports_universal_wizard import REPORT_DOMAIN
 
 
 WIZARD_TYPES = [
@@ -75,18 +74,6 @@ class PrintnodeMapActionServer(models.Model):
     @api.onchange('print_wizard_type')
     def onchange_name(self):
         self.name = ACTION_NAMES.get(self.print_wizard_type)
-
-    @api.onchange('print_wizard_type', 'model_id')
-    def _check_model_name(self):
-        if self.print_wizard_type == 'reports' and self.model_id:
-            model_reports = self.env['ir.actions.report'].search([
-                *REPORT_DOMAIN,
-                ('model', '=', self.model_id.model),
-            ])
-            if not model_reports:
-                raise exceptions.ValidationError(
-                    _("No reports found for this model!")
-                )
 
     @api.model_create_multi
     def create(self, vals):
